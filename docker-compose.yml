@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  vitalityhealthapi:
+    image: ${DOCKER_REGISTRY-}vitalityhealthapi
+    build:
+      context: .
+      dockerfile: VitalityHealthApi/Dockerfile
+    environment:
+     ASPNET_DB_NAME: vitalityhealth
+     ASPNET_DB_PASSWORD: pgpass
+     ASPNET_DB_PORT: 5432
+     ASPNET_DB_USER: root
+     ASPNET_DB_HOST: vitalityhealthpgdb
+    depends_on:
+     - vitalityhealthpgdb
+  vitalityhealthpgdb:
+   image: postgres:latest
+   restart: always
+   # set shared memory limit when using docker-compose
+   shm_size: 128mb
+   # or set shared memory limit when deploy via swarm stack
+   #volumes:
+   #  - type: tmpfs
+   #    target: /dev/shm
+   #    tmpfs:
+   #      size: 134217728 # 128*2^20 bytes = 128Mb
+   environment:
+    POSTGRES_PASSWORD: pgpass
+    
+    
