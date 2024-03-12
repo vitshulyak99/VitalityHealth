@@ -1,0 +1,6 @@
+@VitalityHealthApi_HostAddress = http://localhost:5101
+
+GET {{VitalityHealthApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
